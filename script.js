@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatInput = document.getElementById('chatInput');
     const sendBtn = document.getElementById('sendBtn');
     const chatMessages = document.querySelector('.chatbot-messages');
+    const closeMobileChat = document.querySelector('.close-mobile-chat');
     
     // Current filter states
     let currentCategoryFilter = 'all';
@@ -18,91 +19,34 @@ document.addEventListener('DOMContentLoaded', function() {
     // Specialty filter functionality
     filterButtons.forEach(button => {
         button.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+            
             // Update active button
             filterButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
             
-            currentCategoryFilter = this.getAttribute('data-filter');
-            applyFilters();
+            currentCategoryFilter = filter;
+            filterDoctors();
         });
     });
     
     // Day filter functionality
     dayFilterButtons.forEach(button => {
         button.addEventListener('click', function() {
+            const dayFilter = this.getAttribute('data-day');
+            
             // Update active button
             dayFilterButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
             
-            currentDayFilter = this.getAttribute('data-day');
-            applyFilters();
+            currentDayFilter = dayFilter;
+            filterDoctors();
         });
     });
     
-    // Apply both category and day filters
-    function applyFilters() {
-        doctorCards.forEach(card => {
-            const category = card.getAttribute('data-category');
-            const days = card.getAttribute('data-days');
-            
-            const matchesCategory = currentCategoryFilter === 'all' || category === currentCategoryFilter;
-            const matchesDay = currentDayFilter === 'all' || days.includes(currentDayFilter);
-            
-            if (matchesCategory && matchesDay) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-        
-        // Show/hide specialty sections based on visible cards
-        updateSectionVisibility();
-    }
-    
-    // Update section visibility based on visible cards
-    function updateSectionVisibility() {
-        const specialtySections = document.querySelectorAll('.specialty-section');
-        specialtySections.forEach(section => {
-            const cardsInSection = section.querySelectorAll('.doctor-card');
-            let hasVisibleCard = false;
-            
-            cardsInSection.forEach(card => {
-                if (card.style.display !== 'none') {
-                    hasVisibleCard = true;
-                }
-            });
-            
-            section.style.display = hasVisibleCard ? 'block' : 'none';
-        });
-    }
-    
     // Search functionality
     searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        
-        doctorCards.forEach(card => {
-            const doctorName = card.querySelector('h3').textContent.toLowerCase();
-            const doctorSpecialty = card.querySelector('.specialty').textContent.toLowerCase();
-            const schedule = card.querySelector('.schedule').textContent.toLowerCase();
-            
-            if (doctorName.includes(searchTerm) || 
-                doctorSpecialty.includes(searchTerm) || 
-                schedule.includes(searchTerm)) {
-                
-                // Still respect the current filters
-                const category = card.getAttribute('data-category');
-                const days = card.getAttribute('data-days');
-                
-                const matchesCategory = currentCategoryFilter === 'all' || category === currentCategoryFilter;
-                const matchesDay = currentDayFilter === 'all' || days.includes(currentDayFilter);
-                
-                card.style.display = (matchesCategory && matchesDay) ? 'block' : 'none';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-        
-        updateSectionVisibility();
+        filterDoctors();
     });
     
     // Print functionality
@@ -118,16 +62,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Initialize the chatbot
-    const chatbotHeader = document.querySelector('.chatbot-header');
-    chatbotHeader.addEventListener('click', function(e) {
-        if (e.target !== chatbotToggle && e.target.parentElement !== chatbotToggle) {
-            chatbotContainer.classList.toggle('open');
-            if (chatbotContainer.classList.contains('open')) {
-                chatInput.focus();
-            }
+    // Mobile chatbot - clicking on the circular button opens it
+    chatbotContainer.querySelector('.chatbot-header').addEventListener('click', function(e) {
+        // Only trigger if it's not already open and not clicking on toggle or close buttons
+        if (!chatbotContainer.classList.contains('open') && 
+            !e.target.closest('.chatbot-toggle') && 
+            !e.target.closest('.close-mobile-chat')) {
+            chatbotContainer.classList.add('open');
+            chatInput.focus();
         }
     });
+    
+    // Close mobile chatbot
+    if (closeMobileChat) {
+        closeMobileChat.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent the header click from triggering
+            chatbotContainer.classList.remove('open');
+        });
+    }
     
     // Chatbot send message functionality
     function sendMessage() {
@@ -713,4 +665,36 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize animations and chatbot
     animateOnScroll();
+
+    function filterDoctors() {
+        const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+        const activeDayFilter = document.querySelector('.day-filter-btn.active').getAttribute('data-day');
+        const searchValue = searchInput.value.toLowerCase();
+        
+        doctorCards.forEach(card => {
+            const category = card.getAttribute('data-category');
+            const days = card.getAttribute('data-days').split(' ');
+            const doctorName = card.querySelector('h3').textContent.toLowerCase();
+            const specialty = card.querySelector('.specialty').textContent.toLowerCase();
+            const schedule = card.querySelector('.schedule').textContent.toLowerCase();
+            
+            const matchesFilter = activeFilter === 'all' || category === activeFilter;
+            const matchesDay = activeDayFilter === 'all' || days.includes(activeDayFilter);
+            const matchesSearch = doctorName.includes(searchValue) || 
+                                 specialty.includes(searchValue) || 
+                                 schedule.includes(searchValue);
+            
+            if (matchesFilter && matchesDay && matchesSearch) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        
+        // Show/hide specialty sections based on visible doctors
+        document.querySelectorAll('.specialty-section').forEach(section => {
+            const visibleDoctors = Array.from(section.querySelectorAll('.doctor-card')).some(card => card.style.display !== 'none');
+            section.style.display = visibleDoctors ? 'block' : 'none';
+        });
+    }
 });

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Clinic Schedule</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-hospital"></i> ERS Maternity and Pediatric Care Clinic Schedule</h1>
+            <div class="search-container">
+                <input type="text" id="doctorSearch" placeholder="Search for doctor or specialty...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+        </header>
+
+        <div class="actions">
+            <button id="printBtn" class="action-btn"><i class="fas fa-print"></i> Print Schedule</button>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <h3>Specialty</h3>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="internal">Internal Medicine</button>
+                    <button class="filter-btn" data-filter="general">General Medicine</button>
+                    <button class="filter-btn" data-filter="ent">ENT</button>
+                    <button class="filter-btn" data-filter="pediatrics">Pediatrics</button>
+                    <button class="filter-btn" data-filter="obgyn">OB-GYN</button>
+                    <button class="filter-btn" data-filter="ultrasound">Ultrasound</button>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <h3>Day</h3>
+                <div class="day-filter-buttons">
+                    <button class="day-filter-btn active" data-day="all">All Days</button>
+                    <button class="day-filter-btn" data-day="monday">Monday</button>
+                    <button class="day-filter-btn" data-day="tuesday">Tuesday</button>
+                    <button class="day-filter-btn" data-day="wednesday">Wednesday</button>
+                    <button class="day-filter-btn" data-day="thursday">Thursday</button>
+                    <button class="day-filter-btn" data-day="friday">Friday</button>
+                    <button class="day-filter-btn" data-day="saturday">Saturday</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="schedule-container">
+            <!-- Internal Medicine -->
+            <div class="specialty-section" id="internal-medicine">
+                <h2><i class="fas fa-stethoscope"></i> Internal Medicine</h2>
+                <div class="doctors-grid">
+                    <div class="doctor-card" data-category="internal" data-days="tuesday">
+                        <div class="doctor-info">
+                            <h3>Jackie-Lou Lontoc-Endozo, M.D.</h3>
+                            <p class="specialty">Internal Medicine</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Tuesday</p>
+                                <p><i class="far fa-clock"></i> 5:00PM - 7:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- General Medicine -->
+            <div class="specialty-section" id="general-medicine">
+                <h2><i class="fas fa-user-md"></i> General Medicine</h2>
+                <div class="doctors-grid">
+                    <div class="doctor-card" data-category="general" data-days="monday tuesday wednesday thursday friday">
+                        <div class="doctor-info">
+                            <h3>Chona P. Marquez, M.D.</h3>
+                            <p class="specialty">General Medicine</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Monday to Friday</p>
+                                <p><i class="far fa-clock"></i> 12:00NN - 2:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ENT -->
+            <div class="specialty-section" id="ent">
+                <h2><i class="fas fa-ear-listen"></i> Otorhinolaryngology</h2>
+                <div class="doctors-grid">
+                    <div class="doctor-card" data-category="ent" data-days="monday wednesday">
+                        <div class="doctor-info">
+                            <h3>Lloyd Paolo R. Crizaldo, M.D.</h3>
+                            <p class="specialty">Otorhinolaryngology Head and Neck Surgery</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Monday and Wednesday</p>
+                                <p><i class="far fa-clock"></i> 1:00PM - 2:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pediatrics -->
+            <div class="specialty-section" id="pediatrics">
+                <h2><i class="fas fa-baby"></i> Pediatrics</h2>
+                <div class="doctors-grid">
+                    <div class="doctor-card" data-category="pediatrics" data-days="monday tuesday wednesday friday saturday">
+                        <div class="doctor-info">
+                            <h3>Ivy Avilla-Bergunio, M.D.</h3>
+                            <p class="specialty">Pediatrician</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Monday, Tuesday, Wednesday, Friday, Saturday</p>
+                                <p><i class="far fa-clock"></i> 10:00AM - 12:00NN</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="pediatrics" data-days="monday wednesday friday">
+                        <div class="doctor-info">
+                            <h3>Maria Cristina Gorospe-Murallon, M.D.</h3>
+                            <p class="specialty">Pediatrician</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Monday, Wednesday, Friday</p>
+                                <p><i class="far fa-clock"></i> 10:00AM - 12:00NN</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="pediatrics" data-days="tuesday thursday saturday">
+                        <div class="doctor-info">
+                            <h3>Eireen S. Periodico, M.D.</h3>
+                            <p class="specialty">Pediatrician</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Tuesday, Thursday, Saturday</p>
+                                <p><i class="far fa-clock"></i> 10:00AM - 12:00NN</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="pediatrics" data-days="monday tuesday wednesday friday saturday">
+                        <div class="doctor-info">
+                            <h3>Laurace Stephanie R. Crizaldo, M.D.</h3>
+                            <p class="specialty">Pediatrician</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Monday, Tuesday, Wednesday</p>
+                                <p><i class="far fa-clock"></i> 1:00PM - 3:00PM</p>
+                                <p><i class="far fa-calendar-alt"></i> Friday</p>
+                                <p><i class="far fa-clock"></i> 10:00AM - 12:00NN</p>
+                                <p><i class="far fa-calendar-alt"></i> Saturday</p>
+                                <p><i class="far fa-clock"></i> 12:00NN - 2:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OB-GYN -->
+            <div class="specialty-section" id="obgyn">
+                <h2><i class="fas fa-venus"></i> Obstetrics & Gynecology</h2>
+                <div class="doctors-grid">
+                    <div class="doctor-card" data-category="obgyn" data-days="monday wednesday friday">
+                        <div class="doctor-info">
+                            <h3>Fhe Sierra-Sepacio, M.D., FPOGS</h3>
+                            <p class="specialty">Obstetrician Gynecologist</p>
+                            <p class="appointment-note">By appointment: 09704716507</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Monday, Wednesday, Friday</p>
+                                <p><i class="far fa-clock"></i> 9:00AM - 11:00AM & 2:00PM - 4:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="obgyn" data-days="monday wednesday saturday">
+                        <div class="doctor-info">
+                            <h3>Evalyn Rivera-Castillo, M.D., FPOGS</h3>
+                            <p class="specialty">Obstetrician Gynecologist</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Monday, Wednesday, Saturday</p>
+                                <p><i class="far fa-clock"></i> 9:00AM - 11:00AM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="obgyn" data-days="tuesday saturday">
+                        <div class="doctor-info">
+                            <h3>Julie Abitria-Maurel, M.D., DPOGS</h3>
+                            <p class="specialty">Obstetrician Gynecologist</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Tuesday</p>
+                                <p><i class="far fa-clock"></i> 1:00PM - 3:00PM</p>
+                                <p><i class="far fa-calendar-alt"></i> Saturday</p>
+                                <p><i class="far fa-clock"></i> 3:00PM - 5:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="obgyn" data-days="monday">
+                        <div class="doctor-info">
+                            <h3>Noraliza H. Rocillo, M.D., FPOGS</h3>
+                            <p class="specialty">Obstetrician Gynecologist</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Monday</p>
+                                <p><i class="far fa-clock"></i> 11:00AM - 1:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="obgyn" data-days="tuesday thursday saturday">
+                        <div class="doctor-info">
+                            <h3>Mary Anne Angeles-Barzaga, M.D., FPOGS</h3>
+                            <p class="specialty">Obstetrician Gynecologist</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Tuesday, Thursday, Saturday</p>
+                                <p><i class="far fa-clock"></i> 11:00AM - 1:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="obgyn" data-days="wednesday friday">
+                        <div class="doctor-info">
+                            <h3>June Joanabelle Gabaldon, M.D., FPOGS</h3>
+                            <p class="specialty">Obstetrician Gynecologist</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Wednesday</p>
+                                <p><i class="far fa-clock"></i> 10:00AM - 12:00NN</p>
+                                <p><i class="far fa-calendar-alt"></i> Friday</p>
+                                <p><i class="far fa-clock"></i> 1:00PM - 3:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="obgyn" data-days="friday saturday">
+                        <div class="doctor-info">
+                            <h3>Mirasol Camarce-Beltran, M.D., FPOGS</h3>
+                            <p class="specialty">Obstetrician Gynecologist</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Friday & Saturday</p>
+                                <p><i class="far fa-clock"></i> 10:00AM - 12:00NN</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="obgyn" data-days="tuesday thursday saturday">
+                        <div class="doctor-info">
+                            <h3>Richelle Causaren-Nolasco, M.D.</h3>
+                            <p class="specialty">Obstetrician Gynecologist</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Tuesday & Thursday</p>
+                                <p><i class="far fa-clock"></i> 10:00AM - 12:00PM</p>
+                                <p><i class="far fa-calendar-alt"></i> Saturday</p>
+                                <p><i class="far fa-clock"></i> 11:00AM - 1:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="obgyn" data-days="monday">
+                        <div class="doctor-info">
+                            <h3>Fatima Ophelia Suluen-Del Rosario, M.D., FPOGS</h3>
+                            <p class="specialty">Obstetrician Gynecologist</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Monday</p>
+                                <p><i class="far fa-clock"></i> 10:00AM - 12:00NN</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="obgyn" data-days="tuesday">
+                        <div class="doctor-info">
+                            <h3>Rebecca Ann V. Gabor, M.D., FPOGS</h3>
+                            <p class="specialty">Obstetrician Gynecologist</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Tuesday</p>
+                                <p><i class="far fa-clock"></i> 4:00PM - 6:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="obgyn" data-days="monday saturday">
+                        <div class="doctor-info">
+                            <h3>Marigine Vedan Bayot, M.D., FPOGS</h3>
+                            <p class="specialty">Obstetrician Gynecologist</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Monday & Saturday</p>
+                                <p><i class="far fa-clock"></i> 2:00PM - 4:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="obgyn" data-days="wednesday">
+                        <div class="doctor-info">
+                            <h3>Ellirose Mae S. Sinsay, M.D.</h3>
+                            <p class="specialty">Obstetrician Gynecologist</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Wednesday</p>
+                                <p><i class="far fa-clock"></i> 2:00PM - 4:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="obgyn" data-days="tuesday">
+                        <div class="doctor-info">
+                            <h3>Don Gabay, M.D.</h3>
+                            <p class="specialty">Obstetrician Gynecologist</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Tuesday</p>
+                                <p><i class="far fa-clock"></i> 10:00AM - 12:00NN</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ultrasound -->
+            <div class="specialty-section" id="ultrasound">
+                <h2><i class="fas fa-wave-square"></i> Ultrasound</h2>
+                <p class="ultrasound-note">Registration: 8:00AM</p>
+                <div class="doctors-grid">
+                    <div class="doctor-card" data-category="ultrasound" data-days="wednesday">
+                        <div class="doctor-info">
+                            <h3>Tomas C. Lim, M.D.</h3>
+                            <p class="specialty">Radiology</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Wednesday</p>
+                                <p><i class="far fa-clock"></i> 1:00PM - 3:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="ultrasound" data-days="monday">
+                        <div class="doctor-info">
+                            <h3>Charleen Joy Beredo-Colada, M.D.</h3>
+                            <p class="specialty">Radiology</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Monday</p>
+                                <p><i class="far fa-clock"></i> 1:00PM - 3:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="ultrasound" data-days="tuesday friday">
+                        <div class="doctor-info">
+                            <h3>June Jonabelle Gaballdon, M.D., FPOGS</h3>
+                            <p class="specialty">OB-Sonologist</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Tuesday & Friday</p>
+                                <p><i class="far fa-clock"></i> 4:30PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doctor-card" data-category="ultrasound" data-days="thursday saturday">
+                        <div class="doctor-info">
+                            <h3>Cristine Gerryfe Santos-Ruiz, M.D.</h3>
+                            <p class="specialty">OB-Sonologist</p>
+                            <div class="schedule">
+                                <p><i class="far fa-calendar-alt"></i> Thursday & Saturday</p>
+                                <p><i class="far fa-clock"></i> 11:00AM - 1:00PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 ERS Maternity and Pediatric Care Clinic Schedule | <i class="fas fa-phone"></i> Contact: (123) 456-7890</p>
+        </footer>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <span class="chatbot-title"><i class="fas fa-robot"></i> Schedule Assistant</span>
+            <button class="chatbot-toggle"><i class="fas fa-chevron-up"></i></button>
+        </div>
+        <div class="chatbot-body">
+            <div class="chatbot-messages">
+                <div class="message bot">
+                    <p>Hi there! I'm your Schedule Assistant for ERS Maternity and Pediatric Care Clinic. How can I help you today?</p>
+                    <p>You can ask me questions like:</p>
+                    <ul>
+                        <li>Who's available for pediatrics today?</li>
+                        <li>When does Dr. Sepacio work?</li>
+                        <li>Are there any OB-GYN doctors available on Friday?</li>
+                        <li>Tell me about the ultrasound services</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatInput" placeholder="Type your question here...">
+                <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
